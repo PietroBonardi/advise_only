@@ -21,3 +21,13 @@
 * Comunicabile
 * Utile
 * Dare informazioni utili riguardanti i clienti. Come investono rispetto alla loro condizione generica.
+
+
+# 12/06: Obbiettivi da completare
+* Individuare una classe di algoritmi che funzioni abbastanza bene. 
+  - Per ora i migliori sono `__Agglomerativo__ con L2(distanza euclidea) ed K-Means`.
+* Determinare gli attributi, i.e. capire come fare feature selection in problemi di clustering.
+* Cercare una buona interpretabilità.
+* Capire il confronto con portafoglio attuale.  
+* Chiedere all'azienda come viene calcolato `Portofolio Risk`. 
+
