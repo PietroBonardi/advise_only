@@ -1,15 +1,15 @@
 #creo una classe con tutto il necessario per l'operazione di 
 #feature ranking
-class feature_ranking:
+import numpy as np
+import pandas as pd 
+import math
+class dataframe_ext:
     #attributi: 
     #   - dataframe df
     #   - matrice delle distanze D
     #   - matrice delle similarità S
     #   - parametro similarità alpha
     #   - valore di entropia (float) E
-    import numpy as np 
-    import pandas as pd 
-    import math 
 
     #########################################
     # COSTRUTTORE - easy                    #
@@ -53,6 +53,7 @@ class feature_ranking:
                     ]
                     for _, row2 in df.iterrows()
                 ]
+        self.D = np.asmatrix(self.D)
     
     #funzione per il calcolo di alpha
     #richiede D
@@ -70,14 +71,14 @@ class feature_ranking:
         #vettorizzo la funzione di similarità 
         vsim = np.vectorize(self.sim)
         #calcolo la similarità fra ogni elemento
-        self.S = vsim(self.D, self.alpha)
+        self.S = vsim(self.D)
     
     #converte un valore di similarità
     #in entropia
     @staticmethod
     def sim_to_entropy(sv):
         if sv != 1:
-            return (sv * math.log2(sv)) + ((1-sv)*math.log2(1-sv))
+            return - ((sv * math.log2(sv)) + ((1-sv)*math.log2(1-sv)))
         else:
             return float('nan')
     
