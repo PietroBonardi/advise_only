@@ -38,8 +38,8 @@ def RANK(df):
     rankings = (rankings.sort_values(by = "entropy")                    #sorto secondo i valori di entropia
                        .reset_index(drop = True)                        #resetto l'indice 
                        .reset_index()                                   #resetto di nuovo per avere la colonna dei rankings
-                       .rename(columns = {"index" : "ranking"})         #rinomino index con rankings
-                       .set_index("feature"))                          #metto l'indice sul nome delle features
+                       .rename(columns = {"index" : "score"})           #rinomino index con rankings
+                       .set_index("feature"))                           #metto l'indice sul nome delle features
     return rankings
 
 ##############################################################################
@@ -47,18 +47,20 @@ def RANK(df):
 #                   SRANK ALGORITHM                                          #
 #       Adatto a grossi dataset (grossi a piacere) - usa RANK                #
 ##############################################################################
-def SRANK(df_big):
+def SRANK(df_big, N_SAMPLE = None, SAMPLE_SIZE = None):
     #parametro per il numero di sample
-    N_SAMPLE = 4
-    SAMPLE_SIZE = 10
+    if N_SAMPLE is None:
+        N_SAMPLE = 4
+    if SAMPLE_SIZE is None:
+        SAMPLE_SIZE = 10
 
     #inizializzo il dataframe con i ranking e l'entropia, inizialmente a 0
     features = list(df_big.columns)
     orankings = [0 for x in features]
     tot_rankings = pd.DataFrame({
                                     "feature" : features, 
-                                    "rank_final" : orankings,
-                               }, index = "feature")
+                                    "score_final" : orankings,
+                               }).set_index("feature")
     
     #ora faccio random sampling e applico il RANK
     for i in range(N_SAMPLE):
@@ -67,7 +69,7 @@ def SRANK(df_big):
         df_sample = df_big.sample(n = SAMPLE_SIZE, replace = True)
         sample_ranking = RANK(df_sample)
         #ora sommo i ranking in sample con il valore di rank_final
-        tot_rankings["rank_final"] = tot_rankings["rank_final"] + sample_ranking["ranking"]
+        tot_rankings["score_final"] = tot_rankings["score_final"] + sample_ranking["score"]
     
     #ora restitusco il dataframe dei ranking sortato
-    return tot_ranking.sort(by = "rank_final")
+    return tot_rankings.sort_values(by = "score_final", ascending = False)
