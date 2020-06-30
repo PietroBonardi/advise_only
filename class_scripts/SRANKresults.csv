@@ -1,0 +1,15 @@
+;feature;score_final
+0;RiskPropension;623
+1;PanicMood;618
+2;InheritanceIndex;553
+3;IncomeNeed;472
+4;ClientKnowledgeExperience;455
+5;ClientPotentialIndex;392
+6;ProtectionNeed;383
+7;LongTermCareNeed;294
+8;IncomeHighLow;247
+9;NoTrustInBanks;213
+10;Sex;150
+11;ClientDateStart;100
+12;ClientInvestmentHorizon;50
+13;Age;0
