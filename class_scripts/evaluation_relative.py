@@ -7,7 +7,7 @@
 # - dataframe: i dati completi
 # - rankings: dataframe contenente le variabili ordinate per importanza, 
 #             ottenuto tramite SRANK
-# - algo: [kmeans], [agglomerative]. Tipo di algoritmo da valutare.
+# - algo: [kmeans], [agglomerative], [meanshift] Tipo di algoritmo da valutare.
 # - eval_indexSTR: [CH], [DB], [sil]. Tipo di indice da usare
 
 import pandas as pd 
@@ -15,6 +15,7 @@ import numpy as np
 import math
 from sklearn.cluster import KMeans
 from sklearn.cluster import AgglomerativeClustering
+from sklearn.cluster import MeanShift
 from sklearn import metrics
 from sklearn.metrics import pairwise_distances
 import matplotlib as mpl
@@ -36,11 +37,12 @@ def clustering_evaluation(dataframe, rankings, algo, eval_indexSTR):
 
     for feature in rankings["feature"]:
         #contatore
-        print("\rFeature: ", len(feature_group), "/", 
+        print("\rFeature: ", len(feature_group) + 1, "/", 
               len(rankings.index), end = "\r"),
         #aggiungo una feature al gruppo e prendo i dati
         feature_group.append(feature)
-        data_section = dataframe[feature_group]        
+        data_section = dataframe[feature_group] 
+
 
         # per il gruppo di var vario il numero di cluster 
         # fra 1 e 20, per ognuno calcolo l'indice e lo aggiungo 
@@ -54,10 +56,11 @@ def clustering_evaluation(dataframe, rankings, algo, eval_indexSTR):
                                 "kmeans" : KMeans(n_clusters = nClusters, 
                                                   random_state = 1), 
                                 'agglomerative' : AgglomerativeClustering(n_clusters = nClusters,
-                                                                          affinity = "l2", 
-                                                                          linkage = "average")
+                                                                          affinity = "euclidean", 
+                                                                          linkage = "ward"),
+                                'meanshift' : MeanShift()
                              }
-            
+
             #fitto e calcolo l'indice, lo aggiungo all'array
             model = algorithm_dict[algo]
             model.fit(data_section)
@@ -65,13 +68,25 @@ def clustering_evaluation(dataframe, rankings, algo, eval_indexSTR):
             
             #indici di performance possibili
             if eval_indexSTR == "CH":
-                eval_index = metrics.calinski_harabasz_score(data_section, labels)
+                try:
+                    eval_index = metrics.calinski_harabasz_score(data_section, labels)
+                except:
+                    eval_index = -2
             if eval_indexSTR == "DB":
-                eval_index = metrics.davies_bouldin_score(data_section, labels)
+                try:
+                    eval_index = metrics.davies_bouldin_score(data_section, labels)
+                except:
+                    eval_index = -2
             if eval_indexSTR == "sil":
-                eval_index = metrics.silhouette_score(data_section, labels, metric='l2')
-
+                try: 
+                    eval_index = metrics.silhouette_score(data_section, labels, metric='l2')
+                except:
+                    eval_index = -2
             nCluster_scores.append(eval_index)
+
+            #se l'algoritmo scelto è meanshift, non si deve ripetere il ciclo
+            if algo == "meanshift":
+                break
         
         #salvo l'indice migliore, e il relativo numero di clusters
         if eval_indexSTR == "DB":
@@ -99,7 +114,7 @@ def clustering_evaluation(dataframe, rankings, algo, eval_indexSTR):
           "Number of clusters for best value: ", nClusters_best, end = "\r")
     
     #PLOTTING 
-    plt.figure(figsize = (16, 10))
+    plt.figure(figsize = (8, 5))
     mpl.style.use('fivethirtyeight')
     sns.set(rc = {
                     'axes.facecolor':'lightgray',
@@ -125,8 +140,5 @@ def clustering_evaluation(dataframe, rankings, algo, eval_indexSTR):
     plt.xlabel("Feature group", fontsize = 15, color='#414141')
     plt.ylabel("{} Index value".format(eval_indexSTR), 
                fontsize = 15, color='#414141')
-    #for row in results.iterrows():
-    #    plt.annotate(text = " n = {}".format(row["n_clusters"]), 
-    #                 xy =[int(row["feature_group"]), float(row["index"])])
     plt.draw()
     plt.show()

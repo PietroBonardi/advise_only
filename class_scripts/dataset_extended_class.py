@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd 
 import math
+from sklearn import preprocessing
 class dataframe_ext:
     #attributi: 
     #   - dataframe df
@@ -15,7 +16,11 @@ class dataframe_ext:
     # COSTRUTTORE - easy                    #
     #########################################
     def __init__(self, dataframe):
-        self.df = dataframe
+        #normalizzo tutti i dati
+        features = dataframe.columns
+        scaler = preprocessing.MinMaxScaler()
+        self.df = pd.DataFrame(scaler.fit_transform(dataframe), 
+                                 columns = features)
         self.D = None
         self.S = None
         self.alpha = None
