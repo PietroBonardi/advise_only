@@ -1,3 +1,10 @@
+# COME POTREMMO DISTINGUERE TRA I CLUSTERING
+
+Il nostro obiettivo è quello di presentare un clustering che sia al contempo interessante e significativo. Per fare questo, si deve trovare un modo intelligente per poter andare a confrontare tra i diversi algoritmi che andiamo a proporre (oltre che un metodo per determinare il corretto numero di cluster). 
+Ci sono due strade:
+- Metodi parametrici; in questo caso, si calcolano degli indici, e.g. *silhouette* per la bontà del clustering e qualche misura relativa per determinare il numero di cluster. Sono tecniche molto buone, ma permettono di distungere solamente tra cluster della stessa famiglia: quando si ha a che fare con metodi differenti, alcune misure possono risultare non idonee, e.g. Silhouette per *density based clustering*.
+- Metodi visivi: in questo caso, spetta a noi andare a vedere a occhio, tramite rappresentazioni grafiche, quanto siano buoni i cluster e se abbiamo azzeccato il loro numero corretto. In questa istanza, oltre a delle rappresentazioni 2D attributo-attributo, molto utili se si usano solamente 2 dimensioni per creare il modello ma di utilità limitata in più dimensioni, si potrebbero usare delle tecniche di **riduzione dimensionale**. In particolare, oltre a tecniche analitiche come PCA, si può sicuramente usare il campo del **manifold learning**. Queste tecniche potrebbero permetterci di portare i dati in un numero minore di dimensioni, prendendo però in considerazioni la disposizione interna degli stessi.
+
 # Utile segnarsi alcune cose per i dati
 * Abbiamo diviso i dati in due gruppi, uno che si riferisce a come il cliente è e uno che si riferisce al tipo di investimenti fatti dal cliente.
 * Abbiamo guardato la correlazione fra le varie variabili: quello di interessante che abbiamo trovato è stato:
@@ -23,11 +30,4 @@
 * Dare informazioni utili riguardanti i clienti. Come investono rispetto alla loro condizione generica.
 
 
-# 12/06: Obbiettivi da completare
-* Individuare una classe di algoritmi che funzioni abbastanza bene. 
-  - Per ora i migliori sono `__Agglomerativo__ con L2(distanza euclidea) ed K-Means`.
-* Determinare gli attributi, i.e. capire come fare feature selection in problemi di clustering.
-* Cercare una buona interpretabilità.
-* Capire il confronto con portafoglio attuale.  
-* Chiedere all'azienda come viene calcolato `Portofolio Risk`. 
 
