@@ -1,7 +1,8 @@
 clustering_variables:
-  - RiskPropension
-  - ClientKnowledgeExperience
+  # - ClientKnowledgeExperience
   - Age
+  - IncomeNeed
+  - RiskPropension
   - ProtectionNeed
   - LongTermCareNeed
   - InheritanceIndex

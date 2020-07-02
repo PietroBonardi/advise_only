@@ -19,6 +19,9 @@ from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
 
+# manifold learning
+from sklearn.manifold import TSNE
+
 # Fuzzy clustering
 import skfuzzy as fuzz
 
@@ -132,3 +135,54 @@ def plotting_two_vars(attr1 = None, attr2 = None, data = None, n_clusters_ = Non
     plt.ylabel(attr2)
     plt.savefig("clustering_res.pdf")
     plt.show()
+
+def plotting_all_vars_hdbscan(vars = [], clusterer = None, data = None):
+    # !!! This plot is not optimized and some
+    # graphs are repeated. !!!
+    # Define the size of the canvas and the 
+    # distance between points 
+    fig = plt.figure(figsize = (30, 30))
+    fig.subplots_adjust(hspace=0.8, wspace=0.8)
+    # Define color palette
+    palette = sns.color_palette()
+    # Variable to keep track of the plot
+    i = 0
+    for colname1 in vars[:(len(vars)-1)]:
+        for colname2 in vars:        
+            if colname1 == colname2:
+                pass
+            else:
+                i += 1            
+                
+                cluster_colors = [sns.desaturate(palette[col], sat)
+                                if col >= 0 else (0.5, 0.5, 0.5, 0.5) 
+                                for col, sat in zip(clusterer.labels_, clusterer.probabilities_)]
+                ax = plt.subplot(len(vars), len(vars), i)
+                ax.scatter(data[colname1], 
+                            data[colname2], 
+                            c=cluster_colors, 
+                            marker='.')
+                plt.xlabel(colname1)
+                plt.ylabel(colname2)
+    plt.savefig("hdbscan_res.pdf")
+    plt.show()
+
+def TSNE_manifold_plot(clusterer = None, X = None, cluster_name = ""):
+    N_projection = 2
+    # Transform using Manifold Learning
+    X_transformed = TSNE(n_components = N_projection).fit_transform(X)
+    # 
+    palette = sns.color_palette()
+    cluster_colors = [sns.desaturate(palette[col], sat)
+                    if col >= 0 else (0.5, 0.5, 0.5) 
+                    for col, sat in zip(clusterer.labels_, clusterer.probabilities_)]
+    plt.scatter(X_transformed[:,0], 
+                X_transformed[:,1], 
+                c=cluster_colors, 
+                marker='.')
+    plt.title("TSNE Manifold projection for the clustering")
+    plt.xlabel("X₁")
+    plt.ylabel("X₂")
+    plt.savefig("TSNE"+str(cluster_name)+".pdf")
+    plt.show()
+
