@@ -21,7 +21,7 @@ def pre_processing():
     df = df.drop(df.columns[list(np.arange(8))], axis=1)
 
 #     We do not use the ClientID for any analysis
-    df = df.drop(columns=["ClientID"])
+    # df = df.drop(columns=["ClientID"])
 
 #     Division in the two main categories
     current_investment = ["PortfolioRisk", "PortfolioHorizon", "AuM", "BondInvestments", "EquityInvestments",
