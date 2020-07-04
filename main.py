@@ -2,7 +2,18 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, StringProperty
+import pandas as pd
+from joblib import load
+import hdbscan
+
+RESULT_LABEL = None
+hdb_cluster = load("./HDBSCAN_leaf.joblib")
+
+with open("for_standardization.csv","r") as file:
+    for_stand = pd.read_csv(file)
+
+
 
 Builder.load_string("""
 <CustomLabel@Label>
@@ -13,13 +24,11 @@ Builder.load_string("""
     halign: 'center'
     
     
-    
 <MenuScreen>:
     age_input: age
     incomeneed_input: incomeneed
     riskpropension_input: riskpropension
     protectionneed_input: protectionneed
-    longtermcareneed_input: longtermcareneed
     inheritanceindex_input: inheritanceindex
     
     BoxLayout:
@@ -39,8 +48,7 @@ Builder.load_string("""
             
             CustomLabel: 
                 text: "[b]Age:[/b]"
-                
-               
+                        
                 
             TextInput:
                 id: age
@@ -78,14 +86,6 @@ Builder.load_string("""
                 text: "[b]Long Term Care Need:[/b]"
             
             TextInput: 
-                id: longtermcareneed
-                font_size: 50
-                multiline: False
-                background_color: (1,1,1,0.3)
-            CustomLabel: 
-                text: "[b]Inheritance Index:[/b]"
-            
-            TextInput: 
                 id: inheritanceindex
                 font_size: 50
                 multiline: False
@@ -108,16 +108,21 @@ Builder.load_string("""
                     root.set_incomeneed()
                     root.set_riskpropension()
                     root.set_protectionneed()
-                    root.set_longtermcareneed()
                     root.set_inheritanceindex()
+                    root.get_result()
     
-                                  
-
 <InformationScreen>:
+    results_output: update
     BoxLayout:
         Label:
-            text: 'Da capire quali prodotti'
+            id: update
+            text: update.text
             color: 0,0,0,1
+            
+        Button: 
+            text: "Update"
+            on_release: 
+                root.upd()
         Button:
             text: 'Back to menu'
             background_normal: '/System/Library/Desktop Pictures/Solid Colors/Space Gray.png'
@@ -125,7 +130,8 @@ Builder.load_string("""
             on_press: 
                 root.manager.transition.direction = "right"
                 root.manager.transition.duration = 0.4
-                root.manager.current = 'menu'
+                root.manager.current = 'menu' 
+                root.clearlabel()
 """)
 
 # Declare both screens
@@ -146,32 +152,50 @@ class MenuScreen(Screen):
     inheritanceindex = ''
 
 
-
     def set_age(self):
-        age = int(self.age_input.text)
-        print(age)
+        self.age = (float(self.age_input.text)-for_stand['Age'][0])/for_stand['Age'][1]
+        print(self.age)
 
     def set_incomeneed(self):
-        incomeneed = int(self.incomeneed_input.text)
-        print(incomeneed)
+        self.incomeneed = (float(self.incomeneed_input.text)-for_stand['IncomeNeed'][0])/for_stand['IncomeNeed'][1]
+        print(self.incomeneed)
     def set_riskpropension(self):
-        riskpropension = int(self.riskpropension_input.text)
-        print(riskpropension)
+        self.riskpropension = (float(self.riskpropension_input.text)-for_stand['RiskPropension'][0])/for_stand['RiskPropension'][1]
+        print(self.riskpropension)
 
     def set_protectionneed(self):
-        protectionneed = int(self.protectionneed_input.text)
-        print(protectionneed)
+        self.protectionneed = (float(self.protectionneed_input.text)-for_stand['ProtectionNeed'][0])/for_stand['ProtectionNeed'][1]
+        print(self.protectionneed)
 
-    def set_longtermcareneed(self):
-        longtermcareneed=int(self.longtermcareneed_input.text)
-        print(longtermcareneed)
     def set_inheritanceindex(self):
-        inheritanceindex = int(self.inheritanceindex_input.text)
-        print(inheritanceindex)
+        self.inheritanceindex = (float(self.inheritanceindex_input.text)-for_stand['InheritanceIndex'][0])/for_stand['InheritanceIndex'][1]
+        print(self.inheritanceindex)
+
+    def get_result(self):
+        points = [[self.age,self.incomeneed,self.riskpropension,self.protectionneed,self.inheritanceindex]]
+        print("My Points: ",points)
+        labels, streghts = hdbscan.approximate_predict(hdb_cluster,points)
+        print("Predictions: ", labels[0])
+
+        global RESULT_LABEL
+        RESULT_LABEL = labels[0]
 
 
+#MenuScreen
 class InformationScreen(Screen):
-    pass
+
+    results_output = ObjectProperty(True)
+
+    def upd(self):
+        if RESULT_LABEL is not None:
+            self.results_output.text = str(RESULT_LABEL)
+        else:
+            self.results_output.text = "Error"
+
+    def clearlabel(self):
+        self.results_output.text = "Results"
+    
+
 
 # Create the screen manager
 sm = ScreenManager()
@@ -183,7 +207,6 @@ class TestApp(App):
     def build(self):
         Window.clearcolor = (1,1,1,1)
         return sm
-
 
 if __name__ == '__main__':
     TestApp().run()
