@@ -1,7 +1,7 @@
 import pandas as pd 
 import numpy as np 
 import math
-from dataset_extended_class import dataframe_ext
+from utility_scripts.dataframe_extended_class import dataframe_ext
 ##############################################################################
 #                                                                            #
 #                   RANK ALGORITHM                                           #
