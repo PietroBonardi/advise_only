@@ -1,0 +1,11 @@
+clustering_variables:
+  # - ClientKnowledgeExperience
+  - Age
+  - IncomeNeed
+  - RiskPropension
+  - ProtectionNeed
+  - LongTermCareNeed
+  - InheritanceIndex
+plotting_vars:
+  - RiskPropension
+  - ProtectionNeed
