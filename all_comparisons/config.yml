@@ -4,7 +4,9 @@ clustering_variables:
   - IncomeNeed
   - RiskPropension
   - ProtectionNeed
-  - LongTermCareNeed
+  # - IncomeHighLow
+  # - LongTermCareNeed
+  # - ClientPotentialIndex
   - InheritanceIndex
 plotting_vars:
   - RiskPropension
