@@ -1,0 +1,15 @@
+slides:
+  blue : "#55b6ff"
+  darker_blue : "#2e69b8"
+  gray_bg : "#f0f4f6"
+  gray_fg : "#bcbebf"
+  gray_middle : "#e2e5e7"
+  black : "#1e1e1e"
+  white : "#ecf6fe"
+  orange : "#f66321"
+
+elements:
+  pink : "#D91D81"
+  yellow : "#e0c600"
+  violet : "#9f00ff"
+  green : "#29bf12"
