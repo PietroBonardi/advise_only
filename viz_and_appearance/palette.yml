@@ -13,3 +13,10 @@ elements:
   yellow : "#e0c600"
   violet : "#9f00ff"
   green : "#29bf12"
+
+investments:
+  bond : "#03045e"
+  equity : "#023e8a" 
+  moneymarket : "#0077b6"
+  other : "#0096c7"
+  cash : "#00b4d8"
