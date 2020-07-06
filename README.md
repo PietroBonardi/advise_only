@@ -1,3 +1,11 @@
+# SCHEMA
+
+- Pre-processing (esplorazione e individuazione delle feature)
+- Clustering - HDBSCAN e Manifold Learning per validazione
+- Viz (da finire)
+- Prodotti
+- App
+
 # COME POTREMMO DISTINGUERE TRA I CLUSTERING
 
 Il nostro obiettivo è quello di presentare un clustering che sia al contempo interessante e significativo. Per fare questo, si deve trovare un modo intelligente per poter andare a confrontare tra i diversi algoritmi che andiamo a proporre (oltre che un metodo per determinare il corretto numero di cluster). 
