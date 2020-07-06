@@ -1,0 +1,6 @@
+[size=40][b]Noise[/b][/size]
+
+Il punto selezionato non appartiene a nessun cluster di preciso, 
+ma viene classificato come noise. 
+
+Si consigliano soluzioni di tipo tailor made.
