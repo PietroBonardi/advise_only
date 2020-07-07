@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.config import Config
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -6,18 +7,27 @@ from kivy.properties import ObjectProperty, StringProperty
 import pandas as pd
 from joblib import load
 import hdbscan
+from kivy.uix.floatlayout import FloatLayout
+from kivy.core.text import markup
 
-RESULT_LABEL = None
 hdb_cluster = load("./HDBSCAN_leaf.joblib")
+RS = None
+cluster_description = []
+for cl in range(-1, 4):
+    cluster_file = "cluster_" + str(cl) + ".txt"
+    f = open(cluster_file, "r")
+    cluster_description.append(f.read())
+    f.close()
 
 with open("for_standardization.csv","r") as file:
     for_stand = pd.read_csv(file)
 
-
+Config.set('graphics', 'borderless', 0)
+Config.write()
 
 Builder.load_string("""
 <CustomLabel@Label>
-    color: 0,0,0,.75
+    color: 0,0,0,0.50
     font_size: 45
     markup: True
     text_size: self.size
@@ -37,7 +47,7 @@ Builder.load_string("""
         padding: 10
         
         Label:
-            text: '[color=6666CC][b]A[/b]dvise[/color][color=CCCCCC][b]Only[/b][/color]'
+            text: '[color=#55b6ff][b]AdviseOnly[/b][/color]'
             color: (0,0,0,0.5)
             font_size: 150
             markup: True
@@ -94,12 +104,12 @@ Builder.load_string("""
         FloatLayout:   
             Button:
                 text: 'Submit'
-                background_normal: '/System/Library/Desktop Pictures/Solid Colors/Space Gray.png'
+                background_normal: './Space-Gray.png'
                 border: (20,20,20,20)
                  
                 font_size: 50
                 size_hint : .25, .25 
-                pos: 1000, 50
+                pos: 700, 100
                 on_release: 
                     root.manager.transition.duration = 0.4
                     root.manager.transition.direction = "left"
@@ -118,20 +128,32 @@ Builder.load_string("""
             id: update
             text: update.text
             color: 0,0,0,1
-            
-        Button: 
-            text: "Update"
-            on_release: 
-                root.upd()
-        Button:
-            text: 'Back to menu'
-            background_normal: '/System/Library/Desktop Pictures/Solid Colors/Space Gray.png'
-            
-            on_press: 
-                root.manager.transition.direction = "right"
-                root.manager.transition.duration = 0.4
-                root.manager.current = 'menu' 
-                root.clearlabel()
+            font_size : 25
+            markup : True
+        FloatLayout:
+            Button: 
+                text: 'Update'
+                background_normal: './Space-Gray.png'
+                border: (20,20,20,20)
+                font_size: 50
+                size : 400, 130
+                size_hint : None, None
+                pos: 1400, 550
+                on_release: 
+                    root.upd()
+            Button:
+                text: 'Back to menu'
+                background_normal: './Space-Gray.png'
+                font_size: 50
+                size : 400, 130
+                size_hint : None, None
+                pos: 1400, 350
+                
+                on_press: 
+                    root.manager.transition.direction = "right"
+                    root.manager.transition.duration = 0.4
+                    root.manager.current = 'menu' 
+                    root.clearlabel()
 """)
 
 # Declare both screens
@@ -176,9 +198,8 @@ class MenuScreen(Screen):
         print("My Points: ",points)
         labels, streghts = hdbscan.approximate_predict(hdb_cluster,points)
         print("Predictions: ", labels[0])
-
-        global RESULT_LABEL
-        RESULT_LABEL = labels[0]
+        global RS
+        RS = labels[0]
 
 
 #MenuScreen
@@ -187,8 +208,9 @@ class InformationScreen(Screen):
     results_output = ObjectProperty(True)
 
     def upd(self):
-        if RESULT_LABEL is not None:
-            self.results_output.text = str(RESULT_LABEL)
+        if RS is not None:
+            global cluster_description
+            self.results_output.text = cluster_description[RS+1] 
         else:
             self.results_output.text = "Error"
 
@@ -206,7 +228,10 @@ sm.add_widget(InformationScreen(name='information'))
 class TestApp(App):
     def build(self):
         Window.clearcolor = (1,1,1,1)
+        self.layout = FloatLayout()
         return sm
 
 if __name__ == '__main__':
-    TestApp().run()
+    open = TestApp()
+    open.title = "Cluster Selection - Advise Only"
+    open.run()
