@@ -16,7 +16,14 @@ elements:
 
 investments:
   bond : "#03045e"
-  equity : "#023e8a" 
+  equity : "#023e8a"
   moneymarket : "#0077b6"
   other : "#0096c7"
   cash : "#00b4d8"
+
+clusters:
+  - "#808080"
+  - "#E58530"
+  - "#65B9E4"
+  - "#327A8A"
+  - "#333366"
