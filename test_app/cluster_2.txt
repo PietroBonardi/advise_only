@@ -1,0 +1,19 @@
+[size=40][b]Cluster: Young[/b][/size]
+
+[size=30][b]Descrizione[/b][/size]
+Si tratta del cluster più giovane, con età media pari a 27 anni. Sono gli 
+individui più propensi al rischio, con meno necessità di reddito da cedole
+e dividendi. In questo cluster, i valori di [b]Protection Need[/b] sono più alti
+in media rispetto agli altri cluster. Coerentemente con l'età, infine, 
+gli individui del cluster hanno un basso [b]Inheritance Index[/b].
+
+Si osserva che gli individui del cluster hanno una bassa disponibilità 
+finanziaria.
+
+[size=30][b]Offerta[/b][/size]
+Il loro investimento attuale potrebbe essere modificato puntando ad 
+investire una maggior parte del loro asset in [b]Bond[/b]. Sebbene gli individui
+abbiano una minore possibilità di sopportare perdite, è consigliabile puntare
+ad investire in [b]Azioni o Moneta[/b], in linea con le tendenze di rischio.
+In generale, gli investimenti a lungo termine sembrano più adatti, sfavorendo
+[b]Cash[/b] e favorendo [b]Bond[/b] o [b]Moneta[/b].

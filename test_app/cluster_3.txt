@@ -1,0 +1,16 @@
+[size=40][b]Cluster: Adult[/b][/size]
+
+[size=30][b]Descrizione[/b][/size]
+Il range di età degli appartenenti a questo cluster varia tra 30 e 60, con media
+attorno ai 45. In generale si osserva un basso valore di [b]Income Need[/b] e una 
+tendenza al rischio piuttosto elevata. Di contro, [b]Protection Need[/b] è piuttosto alta, 
+con [b]Inheritance Index[/b] che varia su range piuttosto elevati.
+
+La modalità di investimento degli appartenenti al cluster è molto in linea con le loro 
+caratteristiche personali, con la maggior parte delle risorse investite in [b]Bond[/b].
+
+[size=30][b]Offerta[/b][/size]
+In genere, gli individui nel cluster compiono investimenti molto in linea con le loro 
+caratteristiche personali. Si consiglia solamente di aumentare la quantità di
+investimenti in [b]Moneta o Azioni[/b], più redditizi e più in linea con le tendenze al rischio
+degli individui.

@@ -1,0 +1,21 @@
+[size=40][b]Cluster: [/b][/size]
+
+[size=30][b]Descrizione[/b][/size]
+Si tratta del cluster con l'età media più alta, pari a 66
+anni, con valori che variano tra i 40 e i 100.
+Gli individui di questo cluster hanno una bassa [b]Risk Propension[/b] e una bassa 
+[b]Protection Need[/b]. Il valore di [b]Inheritance Index[/b], invece, è il più alto 
+fra tutti i clusters.
+
+Dal punto di vista degli investimenti, è il cluster che presenta
+minore percentuale di liquidità, con la maggior parte dei fondi
+investiti in bond. 
+
+[size=30][b]Offerta[/b][/size]
+Data la bassa propensione al rischio e la necessità di ottimizzare
+il patrimonio, l'attuale posizione di investimento potrebbe essere
+ottimizzata aumentando la liquidità. Pur trattandosi dell'
+investimento meno redditizio, è quello più i linea con il basso 
+valore di [b]RiskPropension[/b] che caratterizza questo cluster.
+In più, questo tipo di investimento è un ottimo ottimizzatore di 
+patrimonio per gli eredi.
