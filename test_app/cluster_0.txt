@@ -1,0 +1,20 @@
+[size=40][b]Cluster: Adult/Mature[/b][/size]
+
+[size=30][b]Descrizione[/b][/size]
+Presenta un'età media di 58 anni, ma con ampie variazioni.
+Ha in genere income need medio-bassa e risk propension in media attorno 
+a 0.44.
+I valori di Protection Need associati sono piuttosto bassi, con nessun valore
+che supera lo 0.5. Infine, i valori di Inheritance Index si disperdono su un 
+vasto range, con media attorno a 0.5.
+
+In genere, questo gruppo tende ad avere in media un portfolio piuttosto 
+rischioso, con la maggior parte dei fondi investiti in Equity e Bond, mentre
+il valore di Cash è pressochè nullo.
+
+[size=30][b]Offerta[/b][/size]
+Gli individui di questo gruppo sono solitamente in grado di sopportare delle
+perdite, tuttavia, non essendo inclini a rischiare, si suggerisce di fornire
+loro degli investimenti più sicuri delle azioni: Bond e Cash sono un esempio, 
+mentre nel caso in cui il cliente abbia scadenze brevi o preferisse non avere
+troppa liquidità, si potrebbero proporre degli investimenti di tipo Money Market.
