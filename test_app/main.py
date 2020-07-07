@@ -32,85 +32,85 @@ Builder.load_string("""
     markup: True
     text_size: self.size
     halign: 'center'
-    
-    
+
+
 <MenuScreen>:
     age_input: age
     incomeneed_input: incomeneed
     riskpropension_input: riskpropension
     protectionneed_input: protectionneed
     inheritanceindex_input: inheritanceindex
-    
+
     BoxLayout:
         orientation : "vertical"
         spacing: 10
         padding: 10
-        
+
         Label:
             text: '[color=#55b6ff][b]AdviseOnly[/b][/color]'
             color: (0,0,0,0.5)
             font_size: 150
             markup: True
-        
+
         GridLayout:
             cols : 2
             rows : 7
-            
-            CustomLabel: 
+
+            CustomLabel:
                 text: "[b]Age:[/b]"
-                        
-                
+
+
             TextInput:
                 id: age
                 font_size: 50
                 multiline: False
-                background_color: (1,1,1,0.3)            
-            
-            CustomLabel: 
+                background_color: (1,1,1,0.3)
+
+            CustomLabel:
                 text: "[b]Income Need:[/b]"
-            
+
             TextInput:
                 id: incomeneed
                 font_size: 50
                 multiline: False
                 background_color: (1,1,1,0.3)
-            CustomLabel: 
+            CustomLabel:
                 text: "[b]Risk Propension:[/b]"
-            
+
             TextInput:
                 id: riskpropension
                 font_size: 50
                 multiline: False
                 background_color: (1,1,1,0.3)
-                
-            CustomLabel: 
+
+            CustomLabel:
                 text: "[b]Protection Need:[/b]"
-            
+
             TextInput:
                 id: protectionneed
                 font_size: 50
                 multiline: False
                 background_color: (1,1,1,0.3)
-                
-            CustomLabel: 
-                text: "[b]Long Term Care Need:[/b]"
-            
-            TextInput: 
+
+            CustomLabel:
+                text: "[b]InheritanceIndex:[/b]"
+
+            TextInput:
                 id: inheritanceindex
                 font_size: 50
                 multiline: False
                 background_color: (1,1,1,0.3)
-                                   
-        FloatLayout:   
+
+        FloatLayout:
             Button:
                 text: 'Submit'
                 background_normal: './Space-Gray.png'
                 border: (20,20,20,20)
-                 
+
                 font_size: 50
-                size_hint : .25, .25 
+                size_hint : .25, .25
                 pos: 700, 100
-                on_release: 
+                on_release:
                     root.manager.transition.duration = 0.4
                     root.manager.transition.direction = "left"
                     root.manager.current = 'information'
@@ -120,7 +120,7 @@ Builder.load_string("""
                     root.set_protectionneed()
                     root.set_inheritanceindex()
                     root.get_result()
-    
+
 <InformationScreen>:
     results_output: update
     BoxLayout:
@@ -131,7 +131,7 @@ Builder.load_string("""
             font_size : 25
             markup : True
         FloatLayout:
-            Button: 
+            Button:
                 text: 'Update'
                 background_normal: './Space-Gray.png'
                 border: (20,20,20,20)
@@ -139,7 +139,7 @@ Builder.load_string("""
                 size : 400, 130
                 size_hint : None, None
                 pos: 1400, 550
-                on_release: 
+                on_release:
                     root.upd()
             Button:
                 text: 'Back to menu'
@@ -148,11 +148,11 @@ Builder.load_string("""
                 size : 400, 130
                 size_hint : None, None
                 pos: 1400, 350
-                
-                on_press: 
+
+                on_press:
                     root.manager.transition.direction = "right"
                     root.manager.transition.duration = 0.4
-                    root.manager.current = 'menu' 
+                    root.manager.current = 'menu'
                     root.clearlabel()
 """)
 
@@ -210,13 +210,13 @@ class InformationScreen(Screen):
     def upd(self):
         if RS is not None:
             global cluster_description
-            self.results_output.text = cluster_description[RS+1] 
+            self.results_output.text = cluster_description[RS+1]
         else:
             self.results_output.text = "Error"
 
     def clearlabel(self):
         self.results_output.text = "Results"
-    
+
 
 
 # Create the screen manager
