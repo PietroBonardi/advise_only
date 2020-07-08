@@ -26,7 +26,10 @@ import skfuzzy as fuzz
 from DBCV import DBCV
 from scipy.spatial.distance import euclidean
 
-from density_functions import pre_processing, clustering_dbscan, find_best_min_samples, best_eps, plotting_two_vars
+from density_functions import (pre_processing, clustering_dbscan, 
+                                find_best_min_samples, best_eps, 
+                                plotting_two_vars, plotting_all_vars_dbscan,
+                                TSNE_manifold_plot)
 import yaml
 
 def main():
@@ -50,13 +53,14 @@ def main():
     model, n_clusters, n_noise, labels = clustering_dbscan(X = X,
                                                     EPS = float(BEST_EPS),
                                                     BEST_MIN = BEST_MIN)
+    print("-- 2D plots")
+    plotting_all_vars_dbscan(vars=load_vars['clustering_variables'], 
+                            clusterer=model, 
+                            data=df_person_var)
 
-    print("-- Plotting two attributes")
-    plotting_vars = load_vars["plotting_vars"]
-    plotting_two_vars(attr1 = plotting_vars[0],
-                        attr2 = plotting_vars[1],
-                        data = df_person_var,
-                        n_clusters_ = n_clusters,
-                        labels = labels)
+    print("-- TSNE manifold learning projection plot")
+    TSNE_manifold_plot(clusterer=model, 
+                        X=X, 
+                        cluster_name="DBSCAN")
 if __name__ == "__main__":
     main()

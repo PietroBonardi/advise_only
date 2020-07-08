@@ -87,8 +87,10 @@ def find_best_min_samples(X = None, START = 1, END = 100, EPS = 0.5):
 #         Keeps trace of the number of clusters
         N_clusters.append(n_clusters_)
 #         Keeps trace of the silhouette results
+        X_score = X[np.where(clusterer.labels_ > 0)]
+        labels_score = clusterer.labels_[np.where(clusterer.labels_ > 0)]
         try:
-            sils.append(metrics.silhouette_score(X, labels))
+            sils.append(metrics.silhouette_score(X_score, labels_score))
         except:
             print("All points labelled as noise. Stopping.")
             break
@@ -164,8 +166,39 @@ def plotting_all_vars_hdbscan(vars = [], clusterer = None, data = None):
                             marker='.')
                 plt.xlabel(colname1)
                 plt.ylabel(colname2)
-    plt.savefig("hdbscan_res.pdf")
-    plt.show()
+    plt.savefig("hdbscan_res.png")
+    plt.close()
+
+def plotting_all_vars_dbscan(vars = [], clusterer = None, data = None):
+    # !!! This plot is not optimized and some
+    # graphs are repeated. !!!
+    # Define the size of the canvas and the 
+    # distance between points 
+    fig = plt.figure(figsize = (30, 30))
+    fig.subplots_adjust(hspace=0.8, wspace=0.8)
+    # Define color palette
+    palette = sns.color_palette()
+    # Variable to keep track of the plot
+    i = 0
+    for colname1 in vars[:(len(vars)-1)]:
+        for colname2 in vars:        
+            if colname1 == colname2:
+                pass
+            else:
+                i += 1            
+                
+                cluster_colors = [sns.desaturate(palette[col], 1)
+                                if col >= 0 else (0.5, 0.5, 0.5, 0.5) 
+                                for col in clusterer.labels_]
+                ax = plt.subplot(len(vars), len(vars), i)
+                ax.scatter(data[colname1], 
+                            data[colname2], 
+                            c=cluster_colors, 
+                            marker='.')
+                plt.xlabel(colname1)
+                plt.ylabel(colname2)
+    plt.savefig("dbscan_res.png")
+    plt.close()
 
 def TSNE_manifold_plot(clusterer = None, X = None, cluster_name = ""):
     N_projection = 2
@@ -173,9 +206,14 @@ def TSNE_manifold_plot(clusterer = None, X = None, cluster_name = ""):
     X_transformed = TSNE(n_components = N_projection).fit_transform(X)
     # 
     palette = sns.color_palette()
-    cluster_colors = [sns.desaturate(palette[col], sat)
-                    if col >= 0 else (0.5, 0.5, 0.5) 
-                    for col, sat in zip(clusterer.labels_, clusterer.probabilities_)]
+    try:
+        cluster_colors = [sns.desaturate(palette[col], sat)
+                        if col >= 0 else (0.5, 0.5, 0.5) 
+                        for col, sat in zip(clusterer.labels_, clusterer.probabilities_)]
+    except:
+        cluster_colors = [sns.desaturate(palette[col], 1)
+                        if col >= 0 else (0.5, 0.5, 0.5) 
+                        for col in clusterer.labels_]
     plt.scatter(X_transformed[:,0], 
                 X_transformed[:,1], 
                 c=cluster_colors, 
@@ -183,6 +221,6 @@ def TSNE_manifold_plot(clusterer = None, X = None, cluster_name = ""):
     plt.title("TSNE Manifold projection for the clustering")
     plt.xlabel("X₁")
     plt.ylabel("X₂")
-    plt.savefig("TSNE"+str(cluster_name)+".pdf")
+    plt.savefig("TSNE_"+str(cluster_name)+".pdf")
     plt.show()
 

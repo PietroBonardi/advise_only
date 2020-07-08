@@ -54,6 +54,7 @@ def main():
                             min_samples=10).fit(X)
 
     print("-- Final number of clusters found", clusterer.labels_.max()+1)
+    print('-- Number of noise points:', len(np.where(clusterer.labels_ == -1)[0]))
 
     print("-- 2D plots")
     plotting_all_vars_hdbscan(vars = load_vars["clustering_variables"], 
