@@ -9,6 +9,5 @@ Questa repo è privata e contiene il progetto di Data Science Lab per l'anno 202
 - Validazione tramite Manifold Learning (TSNE)
 - Analisi dei risultati
 
-Si prega di non divulgarli.
 
 @Leonardo Alchieri, Davide Badalotti, Pietro Bonardi, Giulia Boschi
