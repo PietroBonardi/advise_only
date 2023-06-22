@@ -1,5 +1,3 @@
-# PROGETTO COMPLETATO
-
 This repo is made of: 
 - Exploration 
 - Feature Selection
