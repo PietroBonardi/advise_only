@@ -1,9 +1,4 @@
-This repo is made of: 
-- Exploration 
-- Feature Selection
-- Clustering
-- Validation, Manifold Learning (TSNE)
-- Comments on results
+The purpose of this repo it is explained in wealth_management.pdf. 
 
-
-@Leonardo Alchieri, Davide Badalotti, Pietro Bonardi, Giulia Boschi
+Team members:
+@Leonardo Alchieri, Davide Badalotti, Giulia Boschi
